@@ -623,7 +623,7 @@
 <!-- ================= INSTANT QUOTE CALCULATOR — MODAL ================= -->
 <div id="qc-overlay">
   <div id="qc-modal" class="relative">
-    <button id="qc-close" aria-label="Close quote calculator">
+    <button id="qc-close" type="button" aria-label="Close quote calculator">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
     </button>
 
@@ -633,12 +633,28 @@
       <h3 class="display font-bold text-xl sm:text-2xl mt-1" id="qc-step-title">What do you need?</h3>
     </div>
 
-    <div class="qc-body" id="qc-body"></div>
+    <form id="qc-form" action="https://formsubmit.co/talhasaeed.047.edu@gmail.com" method="POST">
+      <input type="hidden" name="_subject" value="New Instant Quote Request — Delta Services">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_next" value="https://deltaservices.site/?quote=sent#contact">
+      <input type="hidden" name="name" id="qc-hidden-name">
+      <input type="hidden" name="email" id="qc-hidden-email">
+      <input type="hidden" name="whatsapp" id="qc-hidden-whatsapp">
+      <input type="hidden" name="company" id="qc-hidden-company">
+      <input type="hidden" name="service" id="qc-hidden-service">
+      <input type="hidden" name="project_type" id="qc-hidden-project-type">
+      <input type="hidden" name="requirements" id="qc-hidden-requirements">
+      <input type="hidden" name="budget" id="qc-hidden-budget">
+      <input type="hidden" name="estimated_range" id="qc-hidden-range">
 
-    <div class="qc-nav" id="qc-nav">
-      <button id="qc-back" class="hoverable btn-outline px-6 py-3 rounded-full text-sm">Back</button>
-      <button id="qc-next" class="hoverable btn-gold px-7 py-3 rounded-full text-sm">Next &rarr;</button>
-    </div>
+      <div class="qc-body" id="qc-body"></div>
+
+      <div class="qc-nav" id="qc-nav">
+        <button id="qc-back" type="button" class="hoverable btn-outline px-6 py-3 rounded-full text-sm">Back</button>
+        <button id="qc-next" type="button" class="hoverable btn-gold px-7 py-3 rounded-full text-sm">Next &rarr;</button>
+      </div>
+    </form>
   </div>
 </div>
 
@@ -1321,7 +1337,7 @@
           <p class="text-xs text-[var(--muted)] mt-4 max-w-sm mx-auto leading-relaxed">This is an <strong>estimated range</strong>, not a guaranteed final price. Your final quotation depends on the exact requirements once we review your project.</p>
         </div>
         <div class="grid sm:grid-cols-2 gap-3 mt-6">
-          <button id="qc-submit" class="hoverable btn-gold py-3.5 rounded-full text-sm">Request Detailed Quote</button>
+          <button id="qc-submit" type="submit" class="hoverable btn-gold py-3.5 rounded-full text-sm">Request Detailed Quote</button>
           <a id="qc-whatsapp-btn" href="#" target="_blank" rel="noopener" class="hoverable btn-outline py-3.5 rounded-full text-sm text-center">Chat on WhatsApp</a>
         </div>
         <p id="qc-submit-status" class="mt-4 text-xs text-center mono hidden"></p>`;
@@ -1335,11 +1351,23 @@
       );
       document.getElementById('qc-whatsapp-btn').href = `https://wa.me/923287312388?text=${waText}`;
 
-      document.getElementById('qc-submit').addEventListener('click', qcSubmit);
+      // Fill the hidden form fields so a real (non-JS) form POST always carries the full data
+      const rangeText = `${qcFormatMoney(low)} – ${qcFormatMoney(high)}`;
+      document.getElementById('qc-hidden-name').value = qc.data.name;
+      document.getElementById('qc-hidden-email').value = qc.data.email;
+      document.getElementById('qc-hidden-whatsapp').value = qc.data.whatsapp;
+      document.getElementById('qc-hidden-company').value = qc.data.company || '-';
+      document.getElementById('qc-hidden-service').value = svc.name;
+      document.getElementById('qc-hidden-project-type').value = svc.types[qc.data.typeIndex].label;
+      document.getElementById('qc-hidden-requirements').value = qc.data.addons.length ? qc.data.addons.join(', ') : 'None selected';
+      document.getElementById('qc-hidden-budget').value = qc.data.budget;
+      document.getElementById('qc-hidden-range').value = rangeText;
     }
   }
 
-  async function qcSubmit(){
+  async function qcSubmit(e){
+    e.preventDefault(); // try the fast AJAX path first; fall back to a real submit if it fails
+    if (qc.step !== qc.totalSteps) return; // ignore accidental Enter-key submits on earlier steps
     const { low, high } = qcCalculate();
     const svc = qcGetService();
     const btn = document.getElementById('qc-submit');
@@ -1367,16 +1395,18 @@
       status.textContent = "Thanks — we'll follow up with a detailed quote shortly.";
       btn.textContent = 'Request Sent';
     } catch (err) {
-      status.classList.remove('hidden', 'text-[var(--gold-bright)]');
-      status.classList.add('text-red-400');
-      status.textContent = 'Something went wrong — please message us on WhatsApp instead.';
-      btn.disabled = false;
-      btn.textContent = 'Request Detailed Quote';
+      // AJAX was blocked or failed (common with ad-blockers/privacy extensions) —
+      // fall back to a real, native form submission so the email still goes through.
+      status.classList.remove('hidden', 'text-red-400');
+      status.classList.add('text-[var(--muted)]');
+      status.textContent = 'Finishing up…';
+      document.getElementById('qc-form').submit();
     }
   }
 
   qcBackBtn.addEventListener('click', () => { if (qc.step > 1) { qc.step--; qcNav.style.display = 'flex'; qcRender(); } });
   qcNextBtn.addEventListener('click', () => { if (!qcCanProceed()) return; qc.step++; qcRender(); });
+  document.getElementById('qc-form').addEventListener('submit', qcSubmit);
 
   const faqs = [
     { q:'What services does Delta provide?', a:'Website development, AI workflow automation, SEO, branding, social media management, digital advertising, graphic design and game development — all handled by one team.' },
