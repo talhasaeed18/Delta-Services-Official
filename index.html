@@ -633,11 +633,10 @@
       <h3 class="display font-bold text-xl sm:text-2xl mt-1" id="qc-step-title">What do you need?</h3>
     </div>
 
-    <form id="qc-form" action="https://formsubmit.co/talhasaeed.047.edu@gmail.com" method="POST">
+    <form id="qc-form" action="https://formspree.io/f/xljdgvjp" method="POST">
       <input type="hidden" name="_subject" value="New Instant Quote Request — Delta Services">
-      <input type="hidden" name="_template" value="table">
-      <input type="hidden" name="_captcha" value="false">
       <input type="hidden" name="_next" value="https://deltaservices.site/?quote=sent#contact">
+      <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
       <input type="hidden" name="name" id="qc-hidden-name">
       <input type="hidden" name="email" id="qc-hidden-email">
       <input type="hidden" name="whatsapp" id="qc-hidden-whatsapp">
@@ -780,14 +779,12 @@
     </div>
 
     <div class="reveal" id="contact-us">
-      <form id="contact-form" action="https://formsubmit.co/talhasaeed.047.edu@gmail.com" method="POST" class="service-card rounded-2xl p-5 sm:p-8 lg:p-10" autocomplete="off">
+      <form id="contact-form" action="https://formspree.io/f/xljdgvjp" method="POST" class="service-card rounded-2xl p-5 sm:p-8 lg:p-10" autocomplete="off">
         <p class="eyebrow mono mb-2">CONTACT US &mdash; SEND A PROJECT REQUEST</p>
         <h3 class="display font-bold text-2xl mb-8">Tell us about the project</h3>
 
-        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
         <input type="hidden" name="_subject" value="New project request from Delta Services website">
-        <input type="hidden" name="_template" value="table">
-        <input type="hidden" name="_captcha" value="false">
 
         <div class="grid sm:grid-cols-2 gap-5">
           <div>
@@ -1376,8 +1373,6 @@
     btn.textContent = 'Sending...';
     const payload = new FormData();
     payload.append('_subject', 'New Instant Quote Request — Delta Services');
-    payload.append('_template', 'table');
-    payload.append('_captcha', 'false');
     payload.append('name', qc.data.name);
     payload.append('email', qc.data.email);
     payload.append('whatsapp', qc.data.whatsapp);
@@ -1388,7 +1383,7 @@
     payload.append('budget', qc.data.budget);
     payload.append('estimated_range', `${qcFormatMoney(low)} – ${qcFormatMoney(high)}`);
     try {
-      const res = await fetch('https://formsubmit.co/ajax/talhasaeed.047.edu@gmail.com', { method: 'POST', headers: { 'Accept': 'application/json' }, body: payload });
+      const res = await fetch('https://formspree.io/f/xljdgvjp', { method: 'POST', headers: { 'Accept': 'application/json' }, body: payload });
       if (!res.ok) throw new Error('failed');
       status.classList.remove('hidden', 'text-red-400');
       status.classList.add('text-[var(--gold-bright)]');
@@ -1529,7 +1524,7 @@
   const submitLabel = document.getElementById('f-submit-label');
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    if (form.querySelector('[name="_honey"]').value !== '') return;
+    if (form.querySelector('[name="_gotcha"]').value !== '') return;
     const data = new FormData(form);
     submitBtn.disabled = true;
     submitLabel.textContent = 'SENDING...';
@@ -1537,7 +1532,7 @@
     statusEl.classList.add('text-[var(--muted)]');
     statusEl.textContent = '';
     try {
-      const res = await fetch('https://formsubmit.co/ajax/talhasaeed.047.edu@gmail.com', { method: 'POST', headers: { 'Accept': 'application/json' }, body: data });
+      const res = await fetch('https://formspree.io/f/xljdgvjp', { method: 'POST', headers: { 'Accept': 'application/json' }, body: data });
       if (!res.ok) throw new Error('Request failed');
       submitLabel.textContent = 'REQUEST SENT';
       statusEl.classList.remove('text-red-400');
