@@ -1383,15 +1383,32 @@
     payload.append('budget', qc.data.budget);
     payload.append('estimated_range', `${qcFormatMoney(low)} – ${qcFormatMoney(high)}`);
     try {
-      const res = await fetch('https://formspree.io/f/xljdgvjp', { method: 'POST', headers: { 'Accept': 'application/json' }, body: payload });
-      if (!res.ok) throw new Error('failed');
-      status.classList.remove('hidden', 'text-red-400');
-      status.classList.add('text-[var(--gold-bright)]');
-      status.textContent = "Thanks — we'll follow up with a detailed quote shortly.";
-      btn.textContent = 'Request Sent';
+      const res = await fetch('https://formspree.io/f/xljdgvjp', {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: payload
+      });
+      const resData = await res.json().catch(() => null);
+
+      if (res.ok) {
+        status.classList.remove('hidden', 'text-red-400');
+        status.classList.add('text-[var(--gold-bright)]');
+        status.textContent = "Thanks — we'll follow up with a detailed quote shortly.";
+        btn.textContent = 'Request Sent';
+      } else if (resData && resData.errors) {
+        // Formspree responded with a validation error (e.g. a missing/invalid field) —
+        // surface it instead of silently falling back.
+        status.classList.remove('hidden', 'text-[var(--gold-bright)]');
+        status.classList.add('text-red-400');
+        status.textContent = resData.errors.map(er => er.message).join(', ');
+        btn.disabled = false;
+        btn.textContent = 'Request Detailed Quote';
+      } else {
+        throw new Error('Request failed');
+      }
     } catch (err) {
-      // AJAX was blocked or failed (common with ad-blockers/privacy extensions) —
-      // fall back to a real, native form submission so the email still goes through.
+      // Network error or the request was blocked (common with ad-blockers/privacy
+      // extensions) — fall back to a real, native form submission so the email still goes through.
       status.classList.remove('hidden', 'text-red-400');
       status.classList.add('text-[var(--muted)]');
       status.textContent = 'Finishing up…';
@@ -1532,14 +1549,29 @@
     statusEl.classList.add('text-[var(--muted)]');
     statusEl.textContent = '';
     try {
-      const res = await fetch('https://formspree.io/f/xljdgvjp', { method: 'POST', headers: { 'Accept': 'application/json' }, body: data });
-      if (!res.ok) throw new Error('Request failed');
-      submitLabel.textContent = 'REQUEST SENT';
-      statusEl.classList.remove('text-red-400');
-      statusEl.classList.add('text-[var(--gold-bright)]');
-      statusEl.textContent = 'Thanks — we\'ll be in touch shortly.';
-      form.reset();
-      setTimeout(() => { submitLabel.textContent = 'SEND PROJECT REQUEST'; submitBtn.disabled = false; }, 2500);
+      const res = await fetch('https://formspree.io/f/xljdgvjp', {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: data
+      });
+      const resData = await res.json().catch(() => null);
+
+      if (res.ok) {
+        submitLabel.textContent = 'REQUEST SENT';
+        statusEl.classList.remove('text-red-400');
+        statusEl.classList.add('text-[var(--gold-bright)]');
+        statusEl.textContent = 'Thanks — we\'ll be in touch shortly.';
+        form.reset();
+        setTimeout(() => { submitLabel.textContent = 'SEND PROJECT REQUEST'; submitBtn.disabled = false; }, 2500);
+      } else if (resData && resData.errors) {
+        submitLabel.textContent = 'SEND PROJECT REQUEST';
+        submitBtn.disabled = false;
+        statusEl.classList.remove('text-[var(--gold-bright)]');
+        statusEl.classList.add('text-red-400');
+        statusEl.textContent = resData.errors.map(er => er.message).join(', ');
+      } else {
+        throw new Error('Request failed');
+      }
     } catch (err) {
       submitLabel.textContent = 'SEND PROJECT REQUEST';
       submitBtn.disabled = false;
