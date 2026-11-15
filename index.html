@@ -362,23 +362,115 @@ html[data-theme="light"] .tile-letter{-webkit-text-stroke-color:rgba(10,20,40,.3
 .quote-band .btn{justify-self:start}
 @media(min-width:901px){.quote-band .btn{justify-self:end}}
 
+
 /* ---------- team ---------- */
-.team{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-@media(max-width:1000px){.team{grid-template-columns:1fr 1fr}}
-@media(max-width:620px){.team{grid-template-columns:1fr}}
-.member{border:1px solid var(--line);border-radius:22px;overflow:hidden;background:var(--panel);backdrop-filter:blur(8px);display:flex;flex-direction:column;transition:border-color .4s,transform .6s var(--ease)}
-.member:hover{border-color:var(--gold);transform:translateY(-6px)}
-.m-photo{position:relative;aspect-ratio:4/4.3;background:radial-gradient(circle at 50% 28%,rgba(59,123,240,.42),transparent 62%),radial-gradient(circle at 50% 100%,rgba(231,169,60,.3),transparent 60%),var(--panel2);overflow:hidden}
-.m-photo img{position:absolute;inset:auto 0 0 0;margin:0 auto;height:94%;width:auto;max-width:92%;object-fit:contain;object-position:bottom;transition:transform .9s var(--ease)}
-.member:hover .m-photo img{transform:scale(1.05)}
-.m-body{padding:26px;display:flex;flex-direction:column;gap:12px;flex:1}
-.m-role{font:500 10px 'JetBrains Mono',monospace;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
-.m-body h3{font:500 1.7rem/1.05 'Space Grotesk',sans-serif;letter-spacing:-.035em}
-.m-body p{color:var(--muted);font-size:.93rem}
-.skills{display:flex;flex-wrap:wrap;gap:6px}
-.skills span{font:500 10px 'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--line);border-radius:99px;padding:5px 11px;color:var(--muted)}
-.m-link{margin-top:auto;display:inline-flex;align-items:center;gap:10px;font:600 11px 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;padding-top:6px}
-.m-link:hover{color:var(--gold2)}
+.team {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+@media (max-width: 1000px) {
+  .team {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width: 620px) {
+  .team {
+    grid-template-columns: 1fr;
+  }
+}
+.member {
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  overflow: hidden;
+  background: var(--panel);
+  backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 32px 24px;
+  transition: border-color 0.4s, transform 0.6s var(--ease);
+}
+.member:hover {
+  border-color: var(--gold);
+  transform: translateY(-6px);
+}
+.m-avatar-wrap {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  padding: 4px;
+  background: linear-gradient(135deg, var(--blue), var(--gold));
+  box-shadow: 0 10px 30px -8px rgba(59, 123, 240, 0.35);
+  transition: transform 0.6s var(--ease), box-shadow 0.6s var(--ease);
+}
+.member:hover .m-avatar-wrap {
+  transform: scale(1.05);
+  box-shadow: 0 14px 38px -6px rgba(231, 169, 60, 0.45);
+}
+.m-avatar-wrap img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center 20%;
+  display: block;
+  background: var(--panel2);
+}
+.m-body {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+.m-role {
+  font: 500 10px 'JetBrains Mono', monospace;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.m-body h3 {
+  font: 500 1.6rem/1.1 'Space Grotesk', sans-serif;
+  letter-spacing: -0.035em;
+}
+.m-body p {
+  color: var(--muted);
+  font-size: 0.92rem;
+  max-width: 320px;
+}
+.skills {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+}
+.skills span {
+  font: 500 10px 'JetBrains Mono', monospace;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: 1px solid var(--line);
+  border-radius: 99px;
+  padding: 5px 11px;
+  color: var(--muted);
+}
+.m-link {
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font: 600 11px 'JetBrains Mono', monospace;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding-top: 14px;
+}
+.m-link:hover {
+  color: var(--gold2);
+}
 
 /* ---------- faq ---------- */
 .faq-wrap{display:grid;grid-template-columns:.8fr 1.4fr;gap:clamp(28px,6vw,100px)}
@@ -745,11 +837,76 @@ body:not(.loaded) .hero .rv{opacity:0;transform:translateY(34px)}
   </div>
 </section>
 
+
 <!-- TEAM -->
 <section id="team" class="sec" data-section="Team">
   <div class="wrap">
-    <div class="sec-head"><p class="eyebrow rv">About us</p><h2 class="h2 rv">Meet the <em>Delta team.</em></h2><p class="lead rv">Small team, direct access — every project runs straight through the people who build it.</p></div>
-    <div class="team"><article class="member rv"><div class="m-photo"><img src="team-talha.png" alt="Muhammad Talha" loading="lazy"></div><div class="m-body"><span class="m-role">CEO &amp; Founder</span><h3>Muhammad Talha</h3><p>Leads strategy and client relationships — the first call when a project starts and the one accountable when it ships.</p><div class="skills"><span>Strategy</span><span>Client Relations</span><span>Project Oversight</span></div><a class="m-link" href="https://www.linkedin.com/in/talha-saeed-07240b3b3/" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 11.02-4.12 2.06 2.06 0 01-.02 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg> Visit LinkedIn</a></div></article><article class="member rv"><div class="m-photo"><img src="team-haroon.png" alt="Muhammad Haroon Razzaq" loading="lazy"></div><div class="m-body"><span class="m-role">Senior Developer</span><h3>Muhammad Haroon Razzaq</h3><p>Builds and ships the technical work — from site architecture to the details that make things actually work.</p><div class="skills"><span>Web Development</span><span>Automation</span><span>Architecture</span></div><a class="m-link" href="https://www.linkedin.com/in/haroon-razzaq-738ba919b/" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 11.02-4.12 2.06 2.06 0 01-.02 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg> Visit LinkedIn</a></div></article><article class="member rv"><div class="m-photo"><img src="team-hamza.png" alt="Hamza Shahzad" loading="lazy"></div><div class="m-body"><span class="m-role">Senior Game Developer / 2D Godot</span><h3>Hamza Shahzad</h3><p>Builds interactive and game-based experiences — bringing 2D Godot development expertise to Delta&#x27;s creative projects.</p><div class="skills"><span>Godot</span><span>2D Game Dev</span><span>Interactive Design</span></div><a class="m-link" href="https://www.linkedin.com/in/hamza-shahzad-37b742286" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 11.02-4.12 2.06 2.06 0 01-.02 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg> Visit LinkedIn</a></div></article></div>
+    <div class="sec-head">
+      <p class="eyebrow rv">About us</p>
+      <h2 class="h2 rv">Meet the <em>Delta team.</em></h2>
+      <p class="lead rv">Small team, direct access — every project runs straight through the people who build it.</p>
+    </div>
+    <div class="team">
+      <article class="member rv">
+        <div class="m-avatar-wrap">
+          <img src="team-talha.png" alt="Muhammad Talha" loading="lazy">
+        </div>
+        <div class="m-body">
+          <span class="m-role">CEO &amp; Founder</span>
+          <h3>Muhammad Talha</h3>
+          <p>Leads strategy and client relationships — the first call when a project starts and the one accountable when it ships.</p>
+          <div class="skills">
+            <span>Strategy</span>
+            <span>Client Relations</span>
+            <span>Project Oversight</span>
+          </div>
+          <a class="m-link" href="https://www.linkedin.com/in/talha-saeed-07240b3b3/" target="_blank" rel="noopener">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 11.02-4.12 2.06 2.06 0 01-.02 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
+            Visit LinkedIn
+          </a>
+        </div>
+      </article>
+
+      <article class="member rv">
+        <div class="m-avatar-wrap">
+          <img src="team-haroon.png" alt="Muhammad Haroon Razzaq" loading="lazy">
+        </div>
+        <div class="m-body">
+          <span class="m-role">Senior Developer</span>
+          <h3>Muhammad Haroon Razzaq</h3>
+          <p>Builds and ships the technical work — from site architecture to the details that make things actually work.</p>
+          <div class="skills">
+            <span>Web Development</span>
+            <span>Automation</span>
+            <span>Architecture</span>
+          </div>
+          <a class="m-link" href="https://www.linkedin.com/in/haroon-razzaq-738ba919b/" target="_blank" rel="noopener">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 11.02-4.12 2.06 2.06 0 01-.02 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
+            Visit LinkedIn
+          </a>
+        </div>
+      </article>
+
+      <article class="member rv">
+        <div class="m-avatar-wrap">
+          <img src="team-hamza.png" alt="Hamza Shahzad" loading="lazy">
+        </div>
+        <div class="m-body">
+          <span class="m-role">Senior Game Developer / 2D Godot</span>
+          <h3>Hamza Shahzad</h3>
+          <p>Builds interactive and game-based experiences — bringing 2D Godot development expertise to Delta's creative projects.</p>
+          <div class="skills">
+            <span>Godot</span>
+            <span>2D Game Dev</span>
+            <span>Interactive Design</span>
+          </div>
+          <a class="m-link" href="https://www.linkedin.com/in/hamza-shahzad-37b742286" target="_blank" rel="noopener">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 11.02-4.12 2.06 2.06 0 01-.02 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
+            Visit LinkedIn
+          </a>
+        </div>
+      </article>
+    </div>
   </div>
 </section>
 
