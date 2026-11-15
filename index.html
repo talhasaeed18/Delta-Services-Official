@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Delta Services — Build. Automate. Grow. | Web Development &amp; AI Automation Agency</title>
 <meta name="description" content="Delta Services builds websites, automates business workflows with AI, n8n and Make, and grows brands through SEO, social media and advertising — one team, working worldwide.">
 <meta name="theme-color" content="#050608">
@@ -597,6 +597,135 @@ body:not(.loaded) .hero .rv{opacity:0;transform:translateY(34px)}
 .mega-cta .line:nth-child(2)>span{transition-delay:.12s}
 .statement-text .w{display:inline}
 
+
+/* ============================================================
+   RESPONSIVE HARDENING (phones, tablets, notches, touch, ultra-wide)
+   ============================================================ */
+:root{--sat:env(safe-area-inset-top,0px);--sar:env(safe-area-inset-right,0px);--sab:env(safe-area-inset-bottom,0px);--sal:env(safe-area-inset-left,0px);--gut:clamp(20px,4vw,64px)}
+html{overflow-x:clip;-webkit-tap-highlight-color:transparent}
+img,svg,canvas,video{max-width:100%}
+.wrap{padding-left:max(var(--gut),var(--sal));padding-right:max(var(--gut),var(--sar))}
+.hero{min-height:100vh;min-height:100svh}
+.h-mega{font-size:clamp(2.8rem,13.2vw,14rem)}
+.mega-cta{font-size:clamp(2rem,9vw,9.5rem)}
+.contact-list span.v{overflow-wrap:anywhere}
+
+/* notches / dynamic toolbars */
+.nav{padding-top:calc(22px + var(--sat));padding-left:max(var(--gut),var(--sal));padding-right:max(var(--gut),var(--sar))}
+.nav.scrolled{padding-top:calc(13px + var(--sat));padding-bottom:13px}
+.menu{height:100vh;height:100dvh;padding-top:calc(90px + var(--sat));padding-bottom:calc(40px + var(--sab));padding-left:max(var(--gut),var(--sal));padding-right:max(var(--gut),var(--sar));overscroll-behavior:contain}
+#wa-fab{right:calc(22px + var(--sar));bottom:calc(22px + var(--sab))}
+.foot-bar{padding-bottom:calc(22px + var(--sab))}
+#qc-overlay{padding:max(24px,var(--sat)) max(14px,var(--sar)) max(24px,var(--sab)) max(14px,var(--sal));overscroll-behavior:contain}
+#qc-modal{max-height:none}
+
+/* tablets / small laptops */
+@media(max-width:1000px){
+  .hero{padding-top:calc(110px + var(--sat))}
+  .foot-grid{gap:28px}
+}
+
+/* phones: nav that never overflows */
+@media(max-width:720px){
+  .nav-cta{display:none}
+  .nav-right{gap:8px}
+}
+@media(max-width:480px){
+  #menu-label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  .menu-btn{padding:0 14px;gap:0}
+  .brand{gap:10px;min-width:0}
+  .brand span{font-size:13px;letter-spacing:.1em}
+
+  /* buttons: allow wrapping, go full width where they stack */
+  .btn{white-space:normal;text-align:center;padding:16px 22px;letter-spacing:.1em;line-height:1.35}
+  .hero-bottom{flex-direction:column;align-items:stretch}
+  .hero-actions{width:100%}
+  .hero-actions,.btn-row{flex-direction:column;align-items:stretch}
+  .hero-actions .btn,.btn-row .btn,.centered-cta .btn,.note-box .btn,.quote-band .btn,.src-note .btn{width:100%}
+  .centered-cta{display:block}
+  .quote-band .btn{justify-self:stretch}
+  .hero-tags{gap:8px 16px;margin-top:26px}
+
+  /* cards & tiles */
+  .tile{aspect-ratio:auto;min-height:320px;gap:22px;padding:22px}
+  .card,.pkg,.wf-card,.member{padding:22px}
+  .team{gap:14px}
+  .foot-grid{grid-template-columns:1fr}
+  .benefit{grid-template-columns:1fr;gap:6px}
+  .vbars,.vlabels{gap:8px}
+  .vlabels{font-size:9px;letter-spacing:.04em}
+  .rev-ctrl{gap:12px;flex-wrap:wrap}
+  .rev-prog{max-width:none;min-width:80px}
+  .note-box{padding:20px}
+
+  /* quote calculator becomes a full-screen sheet */
+  #qc-overlay{padding:0}
+  #qc-modal{border-radius:0;min-height:100vh;min-height:100dvh;border-left:0;border-right:0;display:flex;flex-direction:column}
+  #qc-modal form{display:flex;flex-direction:column;flex:1}
+  #qc-body{flex:1}
+  .qc-progress{padding:calc(22px + var(--sat)) 64px 0 20px}
+  #qc-close{top:calc(12px + var(--sat))}
+  .qc-head,#qc-body{padding-left:20px;padding-right:20px}
+  .qc-nav{padding:10px 20px calc(20px + var(--sab));position:sticky;bottom:0;background:var(--panel-solid)}
+}
+@media(max-width:360px){
+  .brand img{height:28px}
+  .brand span{font-size:12px;letter-spacing:.06em}
+  .icon-btn,.menu-btn{height:40px}
+  .icon-btn{width:40px}
+  .eyebrow{font-size:10px;letter-spacing:.16em}
+}
+
+/* short landscape phones */
+@media(max-height:520px) and (orientation:landscape){
+  .hero{align-items:flex-start;padding-top:calc(84px + var(--sat))}
+  .h-mega{font-size:clamp(2.4rem,9vw,5rem)}
+  .menu{justify-content:flex-start}
+  .mlink{font-size:clamp(1.6rem,7vh,2.6rem)}
+  .menu-foot{gap:14px 28px}
+  .loader-count{font-size:clamp(3rem,22vh,7rem)}
+}
+
+/* touch devices: no sticky hover states, comfortable tap targets */
+@media(hover:none){
+  .wf-card:hover,.pkg:hover,.member:hover,.card:hover{transform:none}
+  .svc-row:hover{padding-left:0;padding-right:0}
+  .svc-row:hover::before{transform:scaleY(0)}
+  .svc-row:active::before{transform:scaleY(1)}
+  .contact-list a:hover{padding-left:0}
+  .tile:hover .tile-letter,.tile:hover .tile-logo-box img,.member:hover .m-avatar-wrap{transform:none}
+  .menu.open .menu-links:hover .mlink{opacity:1}
+  .menu.open .menu-links .mlink:hover{transform:none;color:inherit}
+  .icon-btn:hover{transform:none}
+  .btn-line:hover::before{transform:translateY(101%)}
+  .btn-line:active::before{transform:none}
+}
+@media(pointer:coarse){
+  .icon-btn,.menu-btn{min-height:44px}
+  .icon-btn{min-width:44px}
+  .filter{min-height:44px;display:inline-flex;align-items:center}
+  .chip{padding:10px 16px}
+  .qc-toggle button{min-height:40px;padding:9px 20px}
+  .qc-opt{min-height:52px}
+  .qc-nav .btn{min-height:48px}
+  .foot-grid li{margin-bottom:0}
+  .foot-grid li a{display:inline-block;padding:9px 0}
+  .menu-foot a{padding:8px 0}
+  .m-link{padding:14px 0 6px}
+  .faq-q{min-height:56px}
+  .rev-btn{width:52px;height:52px}
+  .contact-list a{min-height:64px}
+}
+
+/* very large screens */
+@media(min-width:1920px){
+  html{font-size:17px}
+  .wrap{max-width:1680px}
+}
+@media(min-width:2560px){
+  html{font-size:19px}
+  .wrap{max-width:1900px}
+}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
 </head>
@@ -1044,15 +1173,15 @@ body:not(.loaded) .hero .rv{opacity:0;transform:translateY(34px)}
     <h2 class="mega-cta"><span class="line"><span>Have a project</span></span><span class="line"><span class="grad">in mind?</span></span></h2>
     <p class="lead rv">Tell us what you're building. We'll help you figure out the next step.</p>
     <div class="contact-grid">
-      <form id="contact-form" class="form rv" action="https://formspree.io/f/xljdgvjp" method="POST" autocomplete="off">
+      <form id="contact-form" class="form rv" action="https://formspree.io/f/xljdgvjp" method="POST" autocomplete="on">
         <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
         <input type="hidden" name="_subject" value="New project request from Delta Services website">
         <div class="row2">
-          <div class="field"><label for="f-name">Full name</label><input id="f-name" name="name" type="text" required placeholder="Your name"></div>
-          <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" required placeholder="you@business.com"></div>
+          <div class="field"><label for="f-name">Full name</label><input id="f-name" name="name" type="text" autocomplete="name" required placeholder="Your name"></div>
+          <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" inputmode="email" autocapitalize="off" required placeholder="you@business.com"></div>
         </div>
         <div class="row2">
-          <div class="field"><label for="f-company">Company (optional)</label><input id="f-company" name="company" type="text" placeholder="Business name"></div>
+          <div class="field"><label for="f-company">Company (optional)</label><input id="f-company" name="company" type="text" autocomplete="organization" placeholder="Business name"></div>
           <div class="field"><label for="f-budget">Budget range (optional)</label>
             <select id="f-budget" name="budget"><option value="">Select a range</option><option>Under $500</option><option>$500 – $1,500</option><option>$1,500 – $5,000</option><option>$5,000+</option><option>Not sure yet</option></select></div>
         </div>
@@ -1609,10 +1738,10 @@ body:not(.loaded) .hero .rv{opacity:0;transform:translateY(34px)}
         bodyEl.innerHTML = '<span class="qc-label">Approximate budget</span><div class="qc-grid two">' + QC_CONFIG.budgetRanges.map(function (b, i) {
           return '<div class="qc-opt' + (qc.data.budget === b ? ' selected' : '') + '" role="button" tabindex="0" data-budget="' + i + '"><span class="qc-mark"></span><span>' + b + '</span></div>';
         }).join('') + '</div><div class="qc-fields">' +
-          '<div><label class="qc-label" for="qc-name">Full name</label><input id="qc-name" class="qc-input" type="text" placeholder="Your name"></div>' +
-          '<div><label class="qc-label" for="qc-email">Email</label><input id="qc-email" class="qc-input" type="email" placeholder="you@business.com"></div>' +
-          '<div><label class="qc-label" for="qc-whatsapp">WhatsApp number</label><input id="qc-whatsapp" class="qc-input" type="tel" placeholder="+92 3XX XXXXXXX"></div>' +
-          '<div><label class="qc-label" for="qc-company">Company (optional)</label><input id="qc-company" class="qc-input" type="text" placeholder="Business name"></div></div>';
+          '<div><label class="qc-label" for="qc-name">Full name</label><input id="qc-name" class="qc-input" type="text" autocomplete="name" placeholder="Your name"></div>' +
+          '<div><label class="qc-label" for="qc-email">Email</label><input id="qc-email" class="qc-input" type="email" autocomplete="email" inputmode="email" autocapitalize="off" placeholder="you@business.com"></div>' +
+          '<div><label class="qc-label" for="qc-whatsapp">WhatsApp number</label><input id="qc-whatsapp" class="qc-input" type="tel" autocomplete="tel" inputmode="tel" placeholder="+92 3XX XXXXXXX"></div>' +
+          '<div><label class="qc-label" for="qc-company">Company (optional)</label><input id="qc-company" class="qc-input" type="text" autocomplete="organization" placeholder="Business name"></div></div>';
         bind('[data-budget]', function (el) { qc.data.budget = QC_CONFIG.budgetRanges[parseInt(el.dataset.budget, 10)]; render(); });
         ['name', 'email', 'whatsapp', 'company'].forEach(function (f) {
           const inp = $('#qc-' + f, bodyEl); inp.value = qc.data[f];
